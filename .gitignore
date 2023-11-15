@@ -27,6 +27,5 @@ coverage
 benchmarks/graphs
 
 misc
-*.env
 bcrypt_test.js
 

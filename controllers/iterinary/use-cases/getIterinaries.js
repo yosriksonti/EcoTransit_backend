@@ -3,10 +3,10 @@ module.exports = function makeGetIterinaries(db, errors, utils) {
 
             let stations = await db.Station.find()
             let fromStations = stations.filter((station) => {
-                return utils.calculateDistance(station.lan, station.lat, req.query.fromLan, req.query.fromLat) < 1  
+                return utils.calculateDistance(station.lan, station.lat, req.query.fromLan, req.query.fromLat) < 2  
             })
             let toStations = stations.filter((station) => {
-                return utils.calculateDistance(station.lan, station.lat, req.query.toLan, req.query.toLat) < 1
+                return utils.calculateDistance(station.lan, station.lat, req.query.toLan, req.query.toLat) < 2
             })
             console.log("FROM",fromStations)
             console.log("TO",toStations)

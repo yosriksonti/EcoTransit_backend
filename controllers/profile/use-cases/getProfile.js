@@ -1,16 +1,8 @@
 module.exports = function makeGetProfile(db,E,utils) {
     return async function getProfile(req, res) {
-        const user = await db.user.findUnique({
-            where: {
-                id: req.user.id,
-            },
-            include : {
-                quizzes : true,
-                submits : true
-            } 
-        });
+        const user = await db.User.findById(req.user.id);
     
-        delete user.password;
+        user.password = undefined;
         res.json(user);
     }
 }

@@ -9,11 +9,10 @@ module.exports = function makeCreateIterinary(db, E, utils) {
             toStation : req.body.toStationId,
             leaveTime : new Date(req.body.leaveTime),
             arriveTime : new Date(req.body.arriveTime),
-            bus : req.body.bus,
+            vehicule : req.body.vehicule,
         })
         let result = await iterinary.save()
         for(let expedition of expeditions) {
-            console.log("EXP",expedition)
             let exp = new db.IterinaryExpedition({
                 iterinary : result.id,
                 expedition : expedition.id,

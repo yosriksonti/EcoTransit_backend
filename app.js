@@ -18,7 +18,9 @@ let utils = require("./utils");
 
 let errors = require("./errors");
 
-var api = require("./controllers")(utils, errors);
+const middlewares = require('./middlewares')
+
+var api = require("./controllers")(utils, errors, middlewares);
 
 
 // start cron

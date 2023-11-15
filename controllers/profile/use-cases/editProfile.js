@@ -2,11 +2,7 @@ var bcrypt = require("bcrypt");
 
 module.exports = function makeEditProfile(db,E,utils) {
     return async function editProfile(req, res) {
-        const foundUser = await db.user.findUnique({
-            where: {
-                id: req.user.id,
-            },
-        });
+        const foundUser = await db.User.findById(req.user.id);
     
         let password;
     
@@ -24,18 +20,21 @@ module.exports = function makeEditProfile(db,E,utils) {
         delete req.body.newpassword;
         delete req.body.oldpassword;
         // security: preventing non GUI hacks
-        delete req.body.isOrganizationAdmin;
     
         let data = { ...req.body, password: password ? password : undefined };
     
-        let user = await db.user.update({
-            where: {
-                id: req.user.id,
-            },
-            data,
-        });
-    
-        delete user.password;
+        await db.User.findByIdAndUpdate(
+            req.user.id,
+            {
+                $set: {
+                   pasword : password,
+                   ...data,
+                }
+             }
+        );
+        let user = await db.User.findById(req.user.id);
+
+        user.password = undefined;
         res.json(user);
     }
 }

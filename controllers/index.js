@@ -1,35 +1,25 @@
 var express = require("express");
-const middlewareModule = require('./middlewares')
 
 let U,
-	E = null;
+	E,
+	M = null;
 
 var router = express.Router();
 
 
 function init() {
-	const middlewares = middlewareModule(U,E)
 	// router.use(middlewares.jsonverify);
-
-	// super admin
-	// isOrganizationAdmin
-	router.use("/profile", require("./profile").router(U, E, middlewares));
-	router.use("/station", require("./station").router(U, E, middlewares));
-	router.use("/expedition", require("./expedition").router(U, E, middlewares));
-	router.use("/iterinary", require("./iterinary").router(U, E, middlewares));
-	// router.use("/quiz", require("./quiz").router(U, E, middlewares));
-	// router.use("/question", require("./question").router(U, E, middlewares));
-	// router.use("/answer", require("./answer").router(U, E, middlewares));
-	// router.use("/file", require("./files")(U, E, middlewares));
-	// router.use("/quiz-submit", require("./quiz-submit").router(U, E, middlewares));
-	
-
-	//router.use("/stage", require("./stage")(E));
+	router.use("/profile", M.jsonverify, require("./profile").router(U, E, M));
+	router.use("/station", M.jsonverify, require("./station").router(U, E, M));
+	router.use("/expedition", M.jsonverify, require("./expedition").router(U, E, M));
+	router.use("/iterinary", M.jsonverify, require("./iterinary").router(U, E, M));
+	router.use("/user", require("./user").router(U,E,M))
 }
 
-module.exports = function (utils, errors) {
+module.exports = function (utils, errors, middlewares) {
 	U = utils;
 	E = errors;
+	M = middlewares(U,E);
 	init();
 	return router;
 };

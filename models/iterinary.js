@@ -4,7 +4,7 @@ const iterinaryScheme = new mongoose.Schema({
     reference : String,
     leaveTime : Date,
     arriveTime : Date,
-    bus : String,
+    vehicule : String,
     fromStation : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Station'
